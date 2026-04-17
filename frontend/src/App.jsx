@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+
+import { fetchData } from "./controller/apiController";
 
 const App = () => {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = React.useState("");
 
-  async function handleRequest() {
+  const handleClick = async () => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/");
-      const result = await response.json();
-      if (result) {
-        setMessage(result.message);
-      }
+      const data = await fetchData();
+      setMessage(data.message);
     } catch (error) {
-      setMessage(error);
+      setMessage(error.message);
     }
-  }
+  };
   return (
     <div>
-      <button onClick={handleRequest}>getResponse</button>
+      <button onClick={handleClick}>getresponse</button>
       <h1>{message}</h1>
     </div>
   );
